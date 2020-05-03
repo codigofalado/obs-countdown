@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="content">
-      <h1>{{ title }}</h1>
+      <h1 v-text="title" />
       <h2 v-html="stream_title"></h2>
       <h3 v-html="stream_subtitle"></h3>
       <Clock />
