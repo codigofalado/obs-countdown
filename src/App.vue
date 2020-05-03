@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Clock from "./components/Clock.vue";
+import Clock from "@/components/Clock.vue";
 
 export default {
   name: "App",
