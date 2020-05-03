@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <div class="content">
-      <h1>
-        {{ title }}
-      </h1>
+      <h1>{{ title }}</h1>
       <h2 v-html="stream_title"></h2>
       <h3 v-html="stream_subtitle"></h3>
       <Clock />
@@ -17,12 +15,8 @@ import Clock from "./components/Clock.vue";
 
 export default {
   name: "App",
-  data() {
-    return {
-      stream_title: "",
-      stream_subtitle: "",
-      stream_paragraph: "",
-    };
+  components: {
+    Clock
   },
   async created() {
     const data = await fetch("../data.json");
@@ -31,15 +25,19 @@ export default {
     this.stream_subtitle = config["stream-subtitle"];
     this.stream_paragraph = config["stream-paragraph"];
   },
+  data() {
+    return {
+      stream_title: "",
+      stream_subtitle: "",
+      stream_paragraph: ""
+    };
+  },
   computed: {
     title: function() {
       const urlParams = new URLSearchParams(location.search);
       return urlParams.get("title") || "O live coding está começando!";
-    },
-  },
-  components: {
-    Clock,
-  },
+    }
+  }
 };
 </script>
 
