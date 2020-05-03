@@ -6,9 +6,7 @@
       </h1>
       <h2 v-html="stream_title"></h2>
       <h3 v-html="stream_subtitle"></h3>
-      <!-- Clock -->
       <Clock />
-      <!-- /Clock -->
       <p v-html="stream_paragraph"></p>
     </div>
   </div>
@@ -29,7 +27,6 @@ export default {
   async created() {
     const data = await fetch("../data.json");
     const config = await data.json();
-    console.log(config);
     this.stream_title = config["stream-title"];
     this.stream_subtitle = config["stream-subtitle"];
     this.stream_paragraph = config["stream-paragraph"];
