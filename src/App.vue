@@ -26,10 +26,9 @@ export default {
       stream_paragraph: "",
     };
   },
-  async created() {
-    const data = await fetch("../data.json");
+  async mounted() {
+    const data = await fetch("./data.json");
     const config = await data.json();
-    console.log(config);
     this.stream_title = config["stream-title"];
     this.stream_subtitle = config["stream-subtitle"];
     this.stream_paragraph = config["stream-paragraph"];
