@@ -21,7 +21,7 @@ export default {
     setInterval(this.countDown, 1000);
   },
   methods: {
-    countDown: function() {
+    countDown() {
       // Se minutos e segundos chegaram ao zero, retorna.
       if (this.minutes == 0 && this.seconds == 0) return;
       // Controla os segundos

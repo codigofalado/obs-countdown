@@ -33,7 +33,7 @@ export default {
     };
   },
   computed: {
-    title: function() {
+    title() {
       const urlParams = new URLSearchParams(location.search);
       return urlParams.get("title") || "O live coding está começando!";
     }
