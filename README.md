@@ -2,7 +2,7 @@
 
 Este repositório contém a tela de countdown usada no canal do [Código Falado](https://www.twitch.tv/codigofalado)
 
-![Tela de CountDown][screenshot.png]
+![Tela de CountDown](screenshot.png)
 
 ## Usando este Countdown
 
