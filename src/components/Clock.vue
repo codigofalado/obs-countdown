@@ -1,8 +1,6 @@
 <template>
   <div>
-    <span v-if="minutes < 10">0</span>{{ minutes }}:<span v-if="seconds < 10"
-      >0</span
-    >{{ seconds }}
+    <span v-text="formattedMinutes" />:<span v-text="formattedSeconds" />
   </div>
 </template>
 <script>
@@ -11,7 +9,7 @@ export default {
     return {
       minutes: 0,
       seconds: 0,
-      elapsed: 0,
+      elapsed: 0
     };
   },
   mounted() {
@@ -21,7 +19,7 @@ export default {
     setInterval(this.countDown, 1000);
   },
   methods: {
-    countDown: function() {
+    countDown() {
       // Se minutos e segundos chegaram ao zero, retorna.
       if (this.minutes == 0 && this.seconds == 0) return;
       // Controla os segundos
@@ -32,7 +30,18 @@ export default {
         this.seconds--;
       }
     },
+    format(number) {
+      return number < 10 ? `0${number}` : number;
+    }
   },
+  computed: {
+    formattedMinutes() {
+      return this.format(this.minutes)
+    },
+    formattedSeconds() {
+      return this.format(this.seconds)
+    },
+  }
 };
 </script>
 <style lang="scss" scoped>
