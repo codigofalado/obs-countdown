@@ -18,8 +18,8 @@ export default {
   components: {
     Clock
   },
-  async created() {
-    const data = await fetch("../data.json");
+  async mounted() {
+    const data = await fetch("./data.json");
     const config = await data.json();
     this.stream_title = config["stream-title"];
     this.stream_subtitle = config["stream-subtitle"];
