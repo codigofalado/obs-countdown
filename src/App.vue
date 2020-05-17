@@ -1,48 +1,43 @@
 <template>
   <div id="app">
     <div class="content">
-      <h1>
-        {{ title }}
-      </h1>
+      <h1 v-text="title" />
       <h2 v-html="stream_title"></h2>
       <h3 v-html="stream_subtitle"></h3>
-      <!-- Clock -->
       <Clock />
-      <!-- /Clock -->
       <p v-html="stream_paragraph"></p>
     </div>
   </div>
 </template>
 
 <script>
-import Clock from "./components/Clock.vue";
+import Clock from "@/components/Clock.vue";
 
 export default {
   name: "App",
-  data() {
-    return {
-      stream_title: "",
-      stream_subtitle: "",
-      stream_paragraph: "",
-    };
+  components: {
+    Clock
   },
-  async created() {
-    const data = await fetch("../data.json");
+  async mounted() {
+    const data = await fetch("./data.json");
     const config = await data.json();
-    console.log(config);
     this.stream_title = config["stream-title"];
     this.stream_subtitle = config["stream-subtitle"];
     this.stream_paragraph = config["stream-paragraph"];
   },
+  data() {
+    return {
+      stream_title: "",
+      stream_subtitle: "",
+      stream_paragraph: ""
+    };
+  },
   computed: {
-    title: function() {
+    title() {
       const urlParams = new URLSearchParams(location.search);
       return urlParams.get("title") || "O live coding está começando!";
-    },
-  },
-  components: {
-    Clock,
-  },
+    }
+  }
 };
 </script>
 
