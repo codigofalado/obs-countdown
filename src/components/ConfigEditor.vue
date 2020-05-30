@@ -1,22 +1,35 @@
 <template>
-  <form class="config-params">
-    <h2>Editar textos</h2>
-  
-    <label for="title">Título:</label>
-    <textarea id="title" cols="40" rows="5" placeholder="Insira o texto de título"></textarea>
+  <transition name="slide-right" mode="out-in">
+    <form class="config-params" v-if="show">
+      <h2>Editar textos</h2>
+    
+      <label for="title">Título:</label>
+      <textarea id="title" cols="40" rows="5" placeholder="Insira o texto de título"></textarea>
 
-    <label for="title">Subtítulo:</label>
-    <textarea id="title" cols="40" rows="5" placeholder="Insira o texto de subtítulo"></textarea>
+      <label for="title">Subtítulo:</label>
+      <textarea id="title" cols="40" rows="5" placeholder="Insira o texto de subtítulo"></textarea>
 
-    <label for="timer">Tempo (minutos):</label>
-    <input type="number" id="timer">
+      <label for="timer">Tempo (minutos):</label>
+      <input type="number" id="timer">
 
-    <label for="paragraph">Paragrafo:</label>
-    <textarea id="paragraph" cols="40" rows="5" placeholder="Insira o texto de paragrafo"></textarea>
+      <label for="paragraph">Paragrafo:</label>
+      <textarea id="paragraph" cols="40" rows="5" placeholder="Insira o texto de paragrafo"></textarea>
 
-    <input type="submit" value="Salvar" class="btn">
-  </form>
+      <input type="submit" value="Salvar" class="btn">
+    </form>
+  </transition>
 </template>
+
+<script>
+export default {
+  props: {
+    show: {
+      type: Boolean,
+      default: false
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
   .config-params {
@@ -125,5 +138,15 @@
 
   #timer {
     width: 100px;
+  }
+
+  .slide-right-enter,
+  .slide-right-leave-to {
+    transform: translateX(-100%);
+  }
+
+  .slide-right-enter-active,
+  .slide-right-leave-active {
+    transition: all 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53);
   }
 </style>

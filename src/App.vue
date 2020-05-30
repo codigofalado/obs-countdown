@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <ConfigEditor />
+    <ConfigEditor :show="isConfigEditorVisible"/>
     <div class="content">
       <h1 v-text="title" />
       <h2 v-html="stream_title"></h2>
@@ -27,18 +27,29 @@ export default {
     this.stream_title = config["stream-title"];
     this.stream_subtitle = config["stream-subtitle"];
     this.stream_paragraph = config["stream-paragraph"];
+
+    window.addEventListener('keydown', event => {
+      this.toggleConfigEditor(event)
+    })
   },
   data() {
     return {
       stream_title: "",
       stream_subtitle: "",
-      stream_paragraph: ""
+      stream_paragraph: "",
+      isConfigEditorVisible: false
     };
   },
   computed: {
     title() {
       const urlParams = new URLSearchParams(location.search);
       return urlParams.get("title") || "O live coding está começando!";
+    },
+  },
+  methods: {
+    toggleConfigEditor({key, ctrlKey, altKey}) {
+      if(/e/i.test(key) && ctrlKey && altKey) this.isConfigEditorVisible = !this.isConfigEditorVisible
+      if(event.key === 'Escape') this.isConfigEditorVisible = false
     }
   }
 };
