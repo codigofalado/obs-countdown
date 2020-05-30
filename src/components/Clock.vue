@@ -5,6 +5,10 @@
 </template>
 <script>
 export default {
+  props: {
+    timerInitialValue: { type: Number, default: 10 },
+    isFrozen: { type: Boolean, default: false }
+  },
   data() {
     return {
       minutes: 0,
@@ -13,11 +17,24 @@ export default {
     };
   },
   mounted() {
-    const urlParams = new URLSearchParams(location.search);
-    const urlMinutes = urlParams.get("minutes");
-    this.minutes = Number(urlMinutes) || 10;
-    this.interval = setInterval(this.countDown, 1000);
+    this.minutes = this.timerInitialValue
+    if(!this.isFrozen) {
+      this.interval = setInterval(this.countDown, 1000);
+    }
   },
+  watch: {
+    isFrozen(val) {
+      if(!val) {
+        this.interval = setInterval(this.countDown, 1000);
+      } else {
+        clearInterval(this.interval)
+      }
+    },
+    timerInitialValue(newVal) {
+      this.minutes = newVal || 1
+      this.seconds = 0
+    }
+  },  
   methods: {
     countDown() {
       // Se minutos e segundos chegaram ao zero, retorna.

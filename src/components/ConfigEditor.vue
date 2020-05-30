@@ -1,19 +1,51 @@
 <template>
-  <transition name="slide-right" mode="out-in">
-    <form class="config-params" v-if="show">
+  <transition name="slide-right" mode="out-in" appear>
+    <form class="config-params" v-if="show" @submit.prevent="">
       <h2>Editar textos</h2>
     
       <label for="title">Título:</label>
-      <textarea id="title" cols="40" rows="5" placeholder="Insira o texto de título"></textarea>
+      <textarea   
+        id="title" 
+        cols="40" 
+        rows="5" 
+        placeholder="Insira o texto de título"
+        v-model="editorTitle"
+      ></textarea>
 
-      <label for="title">Subtítulo:</label>
-      <textarea id="title" cols="40" rows="5" placeholder="Insira o texto de subtítulo"></textarea>
+      <label for="stream-title">Título da live:</label>
+      <textarea 
+        id="stream-title" 
+        cols="40" 
+        rows="5"
+        placeholder="Insira um título para a live"
+        v-model="editorStreamTitle"
+      ></textarea>
 
-      <label for="timer">Tempo (minutos):</label>
-      <input type="number" id="timer">
+      <label for="title">Subtítulo da live:</label>
+      <textarea 
+        id="title" 
+        cols="40" 
+        rows="5" 
+        placeholder="Insira o texto de subtítulo"
+        v-model="editorStreamSubtitle"
+      ></textarea>
+
+      <label for="timer">Contagem regressiva (minutos):</label>
+      <input 
+        type="number" 
+        id="timer" 
+        v-model="timerValue"
+        min="1"
+      >
 
       <label for="paragraph">Paragrafo:</label>
-      <textarea id="paragraph" cols="40" rows="5" placeholder="Insira o texto de paragrafo"></textarea>
+      <textarea 
+        id="paragraph" 
+        cols="40" 
+        rows="5" 
+        placeholder="Insira o texto de paragrafo"
+        v-model="editorStreamParagraph"
+      ></textarea>
 
       <input type="submit" value="Salvar" class="btn">
     </form>
@@ -23,9 +55,56 @@
 <script>
 export default {
   props: {
-    show: {
-      type: Boolean,
-      default: false
+    show: { type: Boolean, default: false },
+    title: { type: String, default: ""},
+    streamTitle: { type: String, default: ""},
+    streamSubtitle: { type: String, default: ""},
+    streamParagraph: { type: String, default: ""},
+    timerInitialValue: { type: Number, default: 10 }
+  },
+  data: () => ({
+    updatedTimerValue: 0
+  }),
+  computed: {
+    editorTitle: {
+      get() {
+        return this.title
+      },
+      set(val) {
+        this.$emit("update:title", val)
+      }
+    },
+    editorStreamTitle: {
+      get() {
+        return this.streamTitle
+      },
+      set(val) {
+        this.$emit("update:streamTitle", val)
+      }
+    },
+    editorStreamParagraph: {
+      get() {
+        return this.streamParagraph
+      },
+      set(val) {
+        this.$emit("update:streamParagraph", val)
+      }
+    },
+    editorStreamSubtitle: {
+      get() {
+        return this.streamSubtitle
+      },
+      set(val) {
+        this.$emit("update:streamSubtitle", val)
+      }
+    },
+    timerValue: {
+      get() {
+        return this.timerInitialValue
+      },
+      set(val) {
+        this.$emit("update:timerInitialValue", parseInt(val))
+      }
     }
   }
 }
@@ -35,7 +114,7 @@ export default {
   .config-params {
     box-sizing: border-box;
     position: absolute;
-    left: 0;
+    left: -70px;
     top: 0;
     bottom: 0;
     background-color: #262626;
@@ -46,6 +125,7 @@ export default {
     z-index: 999;
     scrollbar-color: #12A5B7 #444;
     scrollbar-width: medium;
+    padding-left: 100px;
 
     &::-webkit-scrollbar-track {
       box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -137,7 +217,7 @@ export default {
   }
 
   #timer {
-    width: 100px;
+    width: 130px;
   }
 
   .slide-right-enter,
@@ -147,6 +227,6 @@ export default {
 
   .slide-right-enter-active,
   .slide-right-leave-active {
-    transition: all 0.3s cubic-bezier(0.55, 0.085, 0.68, 0.53);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 </style>

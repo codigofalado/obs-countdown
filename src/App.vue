@@ -1,12 +1,24 @@
 <template>
   <div id="app">
-    <ConfigEditor :show="isConfigEditorVisible"/>
+    <ConfigEditor 
+      :show="isConfigEditorVisible" 
+      :title="title"
+      @update:title="title = $event"
+      :streamTitle="streamTitle"
+      @update:streamTitle="streamTitle = $event"
+       :streamParagraph="streamParagraph"
+      @update:streamSubtitle="streamSubtitle = $event"
+      :streamSubtitle="streamSubtitle"
+      @update:streamParagraph="streamParagraph = $event"
+      :timerInitialValue="timerInitialValue"
+      @update:timerInitialValue="timerInitialValue = $event"
+    />
     <div class="content">
       <h1 v-text="title" />
-      <h2 v-html="stream_title"></h2>
-      <h3 v-html="stream_subtitle"></h3>
-      <Clock />
-      <p v-html="stream_paragraph"></p>
+      <h2 v-html="streamTitle"></h2>
+      <h3 v-html="streamSubtitle"></h3>
+      <Clock :timerInitialValue="timerInitialValue" :isFrozen="isConfigEditorVisible"/>
+      <p v-html="streamParagraph"></p>
     </div>
   </div>
 </template>
@@ -22,29 +34,19 @@ export default {
     ConfigEditor
   },
   async mounted() {
-    const data = await fetch("./data.json");
-    const config = await data.json();
-    this.stream_title = config["stream-title"];
-    this.stream_subtitle = config["stream-subtitle"];
-    this.stream_paragraph = config["stream-paragraph"];
-
     window.addEventListener('keydown', event => {
       this.toggleConfigEditor(event)
     })
   },
   data() {
     return {
-      stream_title: "",
-      stream_subtitle: "",
-      stream_paragraph: "",
-      isConfigEditorVisible: false
+      title: "O live coding está começando",
+      streamTitle: "🐵 Hoje: Criando um Timer com Vue.js + Novos MEMEs no Canal",
+      streamSubtitle: "#Hashtag no Chat vira GIF na Live!",
+      streamParagraph: "Enquanto você espera, <strong>apresente-se</strong> no chat, <strong>pergunte</strong> o que quiser e tente <strong>responder</strong> as perguntas dos amigos!",
+      isConfigEditorVisible: true,
+      timerInitialValue: 10
     };
-  },
-  computed: {
-    title() {
-      const urlParams = new URLSearchParams(location.search);
-      return urlParams.get("title") || "O live coding está começando!";
-    },
   },
   methods: {
     toggleConfigEditor({key, ctrlKey, altKey}) {
