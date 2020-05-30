@@ -1,7 +1,7 @@
 <template>
   <transition name="slide-right" mode="out-in" appear>
     <form class="config-params" v-if="show" @submit.prevent="">
-      <h2>Editar textos</h2>
+      <h2>Painel de configuração</h2>
     
       <label for="title">Título:</label>
       <textarea   
@@ -162,7 +162,7 @@ export default {
 
       &:after {
         content: "";
-        margin-top: 5px;
+        margin-top: 10px;
         display: block;
         height: 2px;
         background-color: #fff;

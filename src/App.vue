@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <ConfigEditor 
+    <ConfigPanel 
       :show="isConfigEditorVisible" 
       :title="title"
       @update:title="title = $event"
@@ -25,13 +25,13 @@
 
 <script>
 import Clock from "@/components/Clock.vue";
-import ConfigEditor from "@/components/ConfigEditor.vue"
+import ConfigPanel from "@/components/ConfigPanel.vue"
 
 export default {
   name: "App",
   components: {
     Clock,
-    ConfigEditor
+    ConfigPanel
   },
   async mounted() {
     window.addEventListener('keydown', event => {
