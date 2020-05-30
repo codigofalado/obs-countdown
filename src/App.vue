@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <ConfigEditor />
     <div class="content">
       <h1 v-text="title" />
       <h2 v-html="stream_title"></h2>
@@ -12,11 +13,13 @@
 
 <script>
 import Clock from "@/components/Clock.vue";
+import ConfigEditor from "@/components/ConfigEditor.vue"
 
 export default {
   name: "App",
   components: {
-    Clock
+    Clock,
+    ConfigEditor
   },
   async mounted() {
     const data = await fetch("./data.json");
