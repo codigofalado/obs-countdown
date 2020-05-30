@@ -3,21 +3,18 @@
     <span v-text="formattedMinutes" />:<span v-text="formattedSeconds" />
   </div>
 </template>
+
 <script>
+import { mapState } from 'vuex'
+
 export default {
-  props: {
-    timerInitialValue: { type: Number, default: 10 },
-    isFrozen: { type: Boolean, default: false }
-  },
   data() {
     return {
-      minutes: 0,
-      seconds: 0,
       interval: null
     };
   },
   mounted() {
-    this.minutes = this.timerInitialValue
+    this.$store.commit('countdownTimer/UPDATE_MINUTES', this.initialCountValue)
     if(!this.isFrozen) {
       this.interval = setInterval(this.countDown, 1000);
     }
@@ -29,10 +26,6 @@ export default {
       } else {
         clearInterval(this.interval)
       }
-    },
-    timerInitialValue(newVal) {
-      this.minutes = newVal || 1
-      this.seconds = 0
     }
   },  
   methods: {
@@ -43,10 +36,10 @@ export default {
       }
       // Controla os segundos
       if (this.seconds == 0) {
-        this.seconds = 59;
-        this.minutes--;
+        this.$store.commit('countdownTimer/UPDATE_SECONDS', 59)
+        this.$store.commit('countdownTimer/UPDATE_MINUTES', this.minutes - 1)
       } else {
-        this.seconds--;
+        this.$store.commit('countdownTimer/UPDATE_SECONDS', this.seconds - 1)
       }
     },
     format(number) {
@@ -54,12 +47,13 @@ export default {
     }
   },
   computed: {
+    ...mapState('countdownTimer', ['minutes', 'seconds', 'initialCountValue']),
     formattedMinutes() {
       return this.format(this.minutes)
     },
     formattedSeconds() {
       return this.format(this.seconds)
-    },
+    }
   }
 };
 </script>

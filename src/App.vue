@@ -1,52 +1,27 @@
 <template>
   <div id="app">
-    <ConfigPanel 
-      :show="isConfigEditorVisible" 
-      :title="title"
-      @update:title="title = $event"
-      :streamTitle="streamTitle"
-      @update:streamTitle="streamTitle = $event"
-       :streamParagraph="streamParagraph"
-      @update:streamSubtitle="streamSubtitle = $event"
-      :streamSubtitle="streamSubtitle"
-      @update:streamParagraph="streamParagraph = $event"
-      :timerInitialValue="timerInitialValue"
-      @update:timerInitialValue="timerInitialValue = $event"
-    />
-    <div class="content">
-      <h1 v-text="title" />
-      <h2 v-html="streamTitle"></h2>
-      <h3 v-html="streamSubtitle"></h3>
-      <Clock :timerInitialValue="timerInitialValue" :isFrozen="isConfigEditorVisible"/>
-      <p v-html="streamParagraph"></p>
-    </div>
+    <ConfigPanel :isVisible="isConfigEditorVisible"/>
+    <StreamContent />
   </div>
 </template>
 
 <script>
-import Clock from "@/components/Clock.vue";
 import ConfigPanel from "@/components/ConfigPanel.vue"
+import StreamContent from "@/components/StreamContent.vue"
 
 export default {
   name: "App",
+  data: () => ({
+    isConfigEditorVisible: false
+  }),
   components: {
-    Clock,
-    ConfigPanel
+    ConfigPanel,
+    StreamContent
   },
   async mounted() {
     window.addEventListener('keydown', event => {
       this.toggleConfigEditor(event)
     })
-  },
-  data() {
-    return {
-      title: "O live coding está começando",
-      streamTitle: "🐵 Hoje: Criando um Timer com Vue.js + Novos MEMEs no Canal",
-      streamSubtitle: "#Hashtag no Chat vira GIF na Live!",
-      streamParagraph: "Enquanto você espera, <strong>apresente-se</strong> no chat, <strong>pergunte</strong> o que quiser e tente <strong>responder</strong> as perguntas dos amigos!",
-      isConfigEditorVisible: true,
-      timerInitialValue: 10
-    };
   },
   methods: {
     toggleConfigEditor({key, ctrlKey, altKey}) {

@@ -1,6 +1,6 @@
 <template>
   <transition name="slide-right" mode="out-in" appear>
-    <form class="config-params" v-if="show" @submit.prevent="">
+    <form class="config-params" v-if="isVisible" @submit.prevent="">
       <h2>Painel de configuração</h2>
     
       <label for="title">Título:</label>
@@ -9,7 +9,8 @@
         cols="40" 
         rows="5" 
         placeholder="Insira o texto de título"
-        v-model="editorTitle"
+        v-model="title"
+        class="input"
       ></textarea>
 
       <label for="stream-title">Título da live:</label>
@@ -18,7 +19,8 @@
         cols="40" 
         rows="5"
         placeholder="Insira um título para a live"
-        v-model="editorStreamTitle"
+        v-model="streamTitle"
+        class="input"
       ></textarea>
 
       <label for="title">Subtítulo da live:</label>
@@ -27,16 +29,21 @@
         cols="40" 
         rows="5" 
         placeholder="Insira o texto de subtítulo"
-        v-model="editorStreamSubtitle"
+        v-model="streamSubtitle"
+        class="input"
       ></textarea>
 
       <label for="timer">Contagem regressiva (minutos):</label>
-      <input 
-        type="number" 
-        id="timer" 
-        v-model="timerValue"
-        min="1"
-      >
+      <div class="timer-wrapper">
+        <input 
+          type="number" 
+          id="timer" 
+          v-model="initialCountValue"
+          min="1"
+          class="input"
+        >
+        <button class="reset-btn" ></button>
+      </div>
 
       <label for="paragraph">Paragrafo:</label>
       <textarea 
@@ -44,7 +51,8 @@
         cols="40" 
         rows="5" 
         placeholder="Insira o texto de paragrafo"
-        v-model="editorStreamParagraph"
+        v-model="streamParagraph"
+        class="input"
       ></textarea>
 
       <input type="submit" value="Salvar" class="btn">
@@ -55,55 +63,47 @@
 <script>
 export default {
   props: {
-    show: { type: Boolean, default: false },
-    title: { type: String, default: ""},
-    streamTitle: { type: String, default: ""},
-    streamSubtitle: { type: String, default: ""},
-    streamParagraph: { type: String, default: ""},
-    timerInitialValue: { type: Number, default: 10 }
+    isVisible: { type: Boolean, default: true}
   },
-  data: () => ({
-    updatedTimerValue: 0
-  }),
   computed: {
-    editorTitle: {
+    title: {
       get() {
-        return this.title
+        return this.$store.state.content.title
       },
       set(val) {
-        this.$emit("update:title", val)
+        this.$store.commit('content/UPDATE_TITLE', val)
       }
     },
-    editorStreamTitle: {
+    streamTitle: {
       get() {
-        return this.streamTitle
+        return this.$store.state.content.streamTitle
       },
       set(val) {
-        this.$emit("update:streamTitle", val)
+        this.$store.commit('content/UPDATE_STREAM_TITLE', val)
       }
     },
-    editorStreamParagraph: {
+    streamParagraph: {
       get() {
-        return this.streamParagraph
+        return this.$store.state.content.streamParagraph
       },
       set(val) {
-        this.$emit("update:streamParagraph", val)
+        this.$store.commit('content/UPDATE_STREAM_PARAGRAPH', val)
       }
     },
-    editorStreamSubtitle: {
+    streamSubtitle: {
       get() {
-        return this.streamSubtitle
+        return this.$store.state.content.streamSubtitle
       },
       set(val) {
-        this.$emit("update:streamSubtitle", val)
+        this.$store.commit('content/UPDATE_STREAM_SUBTITLE', val)
       }
     },
-    timerValue: {
+    initialCountValue: {
       get() {
-        return this.timerInitialValue
+        return this.$store.state.countdownTimer.initialCountValue
       },
       set(val) {
-        this.$emit("update:timerInitialValue", parseInt(val))
+        this.$store.dispatch('countdownTimer/changeInitialCountValue', val)
       }
     }
   }
@@ -158,7 +158,6 @@ export default {
       text-align: center;
       font-size: 28px;
       margin: 0;
-      margin-bottom: 30px;
 
       &:after {
         content: "";
@@ -172,10 +171,10 @@ export default {
     > label {
       display: block;
       margin-bottom: 10px;
+      margin-top: 30px;
     }
 
-    > textarea,
-    > input {
+    .input {
       padding: 10px;
       box-sizing: border-box;
       outline: none;
@@ -184,9 +183,6 @@ export default {
       border-radius: 4px;
       color: #333;
 
-      + label {
-        margin-top: 30px;
-      }
 
       &:active,
       &:focus {
@@ -209,6 +205,9 @@ export default {
       width: 150px;
       cursor: pointer;
       margin-bottom: 60px;
+      border: 0;
+      border-radius: 4px;
+      height: 40px;
 
       &:hover {
         background-color: #AE025E;
@@ -228,5 +227,26 @@ export default {
   .slide-right-enter-active,
   .slide-right-leave-active {
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+
+  .reset-btn {
+    background-color: #EB027E;
+    border: 0;
+    width: 40px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+    background-image: url(../assets/img/reset.svg);
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    &:hover {
+      background-color: #AE025E;
+    }
+  }
+
+  .timer-wrapper {
+    display: flex;
   }
 </style>
