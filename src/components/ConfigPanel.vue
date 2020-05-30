@@ -42,7 +42,7 @@
           min="1"
           class="input"
         >
-        <button class="reset-btn" ></button>
+        <button class="reset-btn" @click="resetTimer"></button>
       </div>
 
       <label for="paragraph">Paragrafo:</label>
@@ -105,6 +105,11 @@ export default {
       set(val) {
         this.$store.dispatch('countdownTimer/changeInitialCountValue', val)
       }
+    }
+  },
+  methods: {
+    resetTimer() {
+      this.$store.dispatch('countdownTimer/resetCount')
     }
   }
 }
@@ -208,9 +213,11 @@ export default {
       border: 0;
       border-radius: 4px;
       height: 40px;
+      border-bottom: 3px solid #AE025E;
+      transition: all 0.3s ease;
 
-      &:hover {
-        background-color: #AE025E;
+      &:active {
+        transform: translateY(1px) scale(0.95);
       }
     }
   }
@@ -240,9 +247,11 @@ export default {
     background-image: url(../assets/img/reset.svg);
     background-repeat: no-repeat;
     background-position: center center;
+    border-bottom: 3px solid #AE025E;
+    transition: all 0.3s ease;
 
-    &:hover {
-      background-color: #AE025E;
+    &:active {
+      transform: translateY(1px) scale(0.95);
     }
   }
 

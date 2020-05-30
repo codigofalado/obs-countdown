@@ -21,6 +21,10 @@ export default {
       ctx.commit("UPDATE_INITIAL_COUNT_VALUE", val);
       ctx.commit("UPDATE_MINUTES", val);
       ctx.commit("UPDATE_SECONDS", 0);
+    },
+    resetCount(ctx) {
+      ctx.commit("UPDATE_MINUTES", ctx.state.initialCountValue);
+      ctx.commit("UPDATE_SECONDS", 0);
     }
   }
 };
