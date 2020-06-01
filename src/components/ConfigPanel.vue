@@ -1,6 +1,6 @@
 <template>
   <transition name="slide-right" mode="out-in" appear>
-    <form class="config-params" v-if="isVisible" @submit.prevent="">
+    <form class="config-params" v-if="isVisible" @submit.prevent="handleSave">
       <h2>Painel de configuração</h2>
     
       <label for="title">Título:</label>
@@ -42,7 +42,7 @@
           min="1"
           class="input"
         >
-        <button class="reset-btn" @click="resetTimer"></button>
+        <button type="button" class="reset-btn" @click="resetTimer"></button>
       </div>
 
       <label for="paragraph">Paragrafo:</label>
@@ -62,13 +62,13 @@
 
 <script>
 export default {
-  props: {
-    isVisible: { type: Boolean, default: true}
-  },
   computed: {
+    isVisible() {
+      return this.$store.state.configPanel.isConfigPainelOpen
+    },
     title: {
       get() {
-        return this.$store.state.content.title
+        return this.$store.state.content.texts.title
       },
       set(val) {
         this.$store.commit('content/UPDATE_TITLE', val)
@@ -76,7 +76,7 @@ export default {
     },
     streamTitle: {
       get() {
-        return this.$store.state.content.streamTitle
+        return this.$store.state.content.texts.streamTitle
       },
       set(val) {
         this.$store.commit('content/UPDATE_STREAM_TITLE', val)
@@ -84,7 +84,7 @@ export default {
     },
     streamParagraph: {
       get() {
-        return this.$store.state.content.streamParagraph
+        return this.$store.state.content.texts.streamParagraph
       },
       set(val) {
         this.$store.commit('content/UPDATE_STREAM_PARAGRAPH', val)
@@ -92,7 +92,7 @@ export default {
     },
     streamSubtitle: {
       get() {
-        return this.$store.state.content.streamSubtitle
+        return this.$store.state.content.texts.streamSubtitle
       },
       set(val) {
         this.$store.commit('content/UPDATE_STREAM_SUBTITLE', val)
@@ -109,7 +109,12 @@ export default {
   },
   methods: {
     resetTimer() {
-      this.$store.dispatch('countdownTimer/resetCount')
+      this.$store.dispatch('countdownTimer/resetCount') 
+    },
+    handleSave() {
+      this.$store.dispatch('content/setLocalStorageContent').then(() => {
+        this.$store.commit('configPanel/CHANGE_IS_CONFIG_PANEL_OPEN', false)
+      })
     }
   }
 }

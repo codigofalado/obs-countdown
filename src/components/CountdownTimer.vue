@@ -8,9 +8,6 @@
 import { mapState } from 'vuex'
 
 export default {
-  props: {
-    isFrozen: {  type: Boolean, default: false }
-  },
   data() {
     return {
       interval: null
@@ -56,6 +53,9 @@ export default {
     },
     formattedSeconds() {
       return this.format(this.seconds)
+    },
+    isFrozen() {
+      return this.$store.state.configPanel.isConfigPainelOpen
     }
   }
 };

@@ -1,13 +1,13 @@
 <template>
   <div class="content">
-    <h1 v-text="title" />
-    <h2 v-html="streamTitle"></h2>
-    <h3 v-html="streamSubtitle"></h3>
+    <h1 v-text="texts.title" />
+    <h2 v-html="texts.streamTitle"></h2>
+    <h3 v-html="texts.streamSubtitle"></h3>
     <CountdownTimer 
       :timerInitialValue="initialCountValue" 
       :isFrozen="isFrozen"
     />
-    <p v-html="streamParagraph"></p>
+    <p v-html="texts.streamParagraph"></p>
   </div>
 </template>
 
@@ -23,12 +23,12 @@ export default {
   components: {
     CountdownTimer
   },
+  created() {
+    this.$store.dispatch('content/getLocalStorageContent')
+  },
   computed: {
     ...mapState('content', [
-      'title', 
-      'streamTitle', 
-      'streamSubtitle', 
-      'streamParagraph'
+      'texts'
     ]),
     initialCountValue() {
       return this.$store.state.countdownTimer.initialCountValue

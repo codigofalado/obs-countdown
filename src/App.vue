@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <ConfigPanel :isVisible="isConfigEditorVisible"/>
-    <StreamContent :isFrozen="isConfigEditorVisible"/>
+    <ConfigPanel />
+    <StreamContent />
   </div>
 </template>
 
@@ -11,9 +11,6 @@ import StreamContent from "@/components/StreamContent.vue"
 
 export default {
   name: "App",
-  data: () => ({
-    isConfigEditorVisible: false
-  }),
   components: {
     ConfigPanel,
     StreamContent
@@ -23,10 +20,16 @@ export default {
       this.toggleConfigEditor(event)
     })
   },
+  computed: {
+    isConfigPainelOpen() {
+      return this.$store.state.configPanel.isConfigPainelOpen
+    }
+  },
   methods: {
     toggleConfigEditor({key, ctrlKey, altKey}) {
-      if(/e/i.test(key) && ctrlKey && altKey) this.isConfigEditorVisible = !this.isConfigEditorVisible
-      if(event.key === 'Escape') this.isConfigEditorVisible = false
+      if(/e/i.test(key) && ctrlKey && altKey) 
+        this.$store.commit('configPanel/CHANGE_IS_CONFIG_PANEL_OPEN', !this.isConfigPainelOpen)
+      if(event.key === 'Escape') this.$store.commit('configPanel/CHANGE_IS_CONFIG_PANEL_OPEN', false)
     }
   }
 };
