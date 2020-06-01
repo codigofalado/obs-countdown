@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{frozen: isFrozen}">
     <span v-text="formattedMinutes" />:<span v-text="formattedSeconds" />
   </div>
 </template>
@@ -8,6 +8,9 @@
 import { mapState } from 'vuex'
 
 export default {
+  props: {
+    isFrozen: {  type: Boolean, default: false }
+  },
   data() {
     return {
       interval: null
@@ -60,5 +63,9 @@ export default {
 <style lang="scss" scoped>
 div {
   font-size: 70px;
+}
+
+.frozen {
+  color: #12A5B7;
 }
 </style>

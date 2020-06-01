@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <ConfigPanel :isVisible="isConfigEditorVisible"/>
-    <StreamContent />
+    <StreamContent :isFrozen="isConfigEditorVisible"/>
   </div>
 </template>
 

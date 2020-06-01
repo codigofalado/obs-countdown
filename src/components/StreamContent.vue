@@ -3,7 +3,10 @@
     <h1 v-text="title" />
     <h2 v-html="streamTitle"></h2>
     <h3 v-html="streamSubtitle"></h3>
-    <CountdownTimer :timerInitialValue="initialCountValue" :isFrozen="false"/>
+    <CountdownTimer 
+      :timerInitialValue="initialCountValue" 
+      :isFrozen="isFrozen"
+    />
     <p v-html="streamParagraph"></p>
   </div>
 </template>
@@ -14,6 +17,9 @@ import { mapState } from 'vuex'
 import CountdownTimer from "@/components/CountdownTimer.vue";
 
 export default {
+  props: {
+    isFrozen: { type: Boolean, default: false }
+  },
   components: {
     CountdownTimer
   },
