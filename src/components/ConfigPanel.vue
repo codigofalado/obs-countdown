@@ -208,13 +208,13 @@ export default {
     > .btn {
       display: block;
       margin-top: 60px;
+      margin-bottom: 30px;
       margin-left: auto;
       background-color: #EB027E;
       color: #fff;
       font-weight: bold;
       width: 150px;
       cursor: pointer;
-      margin-bottom: 60px;
       border: 0;
       border-radius: 4px;
       height: 40px;
