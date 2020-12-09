@@ -64,7 +64,7 @@ export default {
     height: 80vh;
     padding: 70px;
     > * {
-      text-shadow: 0px 5px 0px #860c4e;
+      text-shadow: 1px 5px 0px #860c4e;
     }
     h1 {
       max-width: 400px;
