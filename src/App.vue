@@ -1,41 +1,35 @@
 <template>
   <div id="app">
-    <div class="content">
-      <h1 v-text="title" />
-      <h2 v-html="stream_title"></h2>
-      <h3 v-html="stream_subtitle"></h3>
-      <Clock />
-      <p v-html="stream_paragraph"></p>
-    </div>
+    <ConfigPanel />
+    <StreamContent />
   </div>
 </template>
 
 <script>
-import Clock from "@/components/Clock.vue";
+import ConfigPanel from "@/components/ConfigPanel.vue"
+import StreamContent from "@/components/StreamContent.vue"
 
 export default {
   name: "App",
   components: {
-    Clock
+    ConfigPanel,
+    StreamContent
   },
   async mounted() {
-    const data = await fetch("./data.json");
-    const config = await data.json();
-    this.stream_title = config["stream-title"];
-    this.stream_subtitle = config["stream-subtitle"];
-    this.stream_paragraph = config["stream-paragraph"];
-  },
-  data() {
-    return {
-      stream_title: "",
-      stream_subtitle: "",
-      stream_paragraph: ""
-    };
+    window.addEventListener('keydown', event => {
+      this.toggleConfigEditor(event)
+    })
   },
   computed: {
-    title() {
-      const urlParams = new URLSearchParams(location.search);
-      return urlParams.get("title") || "O live coding está começando!";
+    isConfigPainelOpen() {
+      return this.$store.state.configPanel.isConfigPainelOpen
+    }
+  },
+  methods: {
+    toggleConfigEditor({key, ctrlKey, altKey}) {
+      if(/e/i.test(key) && ctrlKey && altKey) 
+        this.$store.commit('configPanel/CHANGE_IS_CONFIG_PANEL_OPEN', !this.isConfigPainelOpen)
+      if(event.key === 'Escape') this.$store.commit('configPanel/CHANGE_IS_CONFIG_PANEL_OPEN', false)
     }
   }
 };

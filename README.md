@@ -12,9 +12,8 @@ Este repositório contém a tela de countdown usada no canal do [Código Falado]
 4. Rode `npm install` para instalar as dependências.
 5. Rode `npm run build` para criar a pasta `dist` contendo o Countdown funcionando.
 6. Adicione a url `http://localhost:5000` no OBS via Browser Source
-7. Você pode definir os minutos e o título da página através de query string na URL. Ex.: `http://localhost:5000/?minutes=15&title=Meu+T%C3%ADtulo+De+Exemplo`
-8. Altere o arquivo `dist/data.json` com o título / subtítulo / parágrafo da sua transmissão **sempre que for começar uma nova Live**.
-9. Rode `npm run stream` para iniciar um servidor local com o Countdown na porta 5000 **sempre que for começar uma nova Live**.
+7. Rode `npm run stream` para iniciar um servidor local com o Countdown na porta 5000 **sempre que for começar uma nova Live**.
+8. Para definir os textos e o tempo da contagem regressiva entre na url `http://localhost:5000` e pressione CTRL + alt + e que um panel de configuração será aberto, para sair basta pressionar as mesmas teclas novamente ou ESC.
 
 # Customizando o Projeto
 
