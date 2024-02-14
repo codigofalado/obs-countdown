@@ -64,7 +64,7 @@ export default {
     height: 80vh;
     padding: 70px;
     > * {
-      text-shadow: 1px 5px 0px #860c4e;
+      text-shadow: 3px 2px 2px #860c4e;
     }
     h1 {
       max-width: 400px;
@@ -87,10 +87,13 @@ export default {
     }
     p {
       position: absolute;
-      font-size: 1.3rem;
+      font-size: 1.5rem;
       line-height: 1.5;
       bottom: 30px;
       max-width: 650px;
+    }
+    strong{
+      color: #edd315;
     }
   }
 }
